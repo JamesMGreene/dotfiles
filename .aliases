@@ -16,6 +16,7 @@ alias d="cd ~/dev"
 alias git="hub"
 alias g="git"
 alias f="find . -iname "
+alias fa="find / -iname " # "fa" = "find all"
 alias clearx="clear; clear; echo; echo; echo; echo; echo"
 
 # Detect which `ls` flavor is in use
