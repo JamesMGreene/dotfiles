@@ -1,10 +1,46 @@
 [alias]
 
+	undo = "!f() { git reset HEAD \"$1\" && git checkout -- \"$1\" }; f"
+	br = branch
+	co = checkout
+	cam = commit -am
+	cm = commit -m
+	up = pull
+	prom = pull --rebase origin master
+	prum = pull --rebase upstream master
+	prog = pull --rebase origin gh-pages
+	prug = pull --rebase upstream gh-pages
+	dis = diff --staged
+	p = push
+	po = push origin
+	pom = push origin master
+	pog = push origin gh-pages
+	pu = push upstream
+	pum = push upstream master
+	pug = push upstream gh-pages
+	pushbr = push -u origin HEAD
+	upstream = remote set-url upstream
+	pick = cherry-pick
+	rbi = rebase --interactive
+	rms = "!f(){ git rm --cached \"$1\";rm -r \"$1\";git config -f .gitmodules --remove-section \"submodule.$1\";git config -f .git/config --remove-section \"submodule.$1\";git add .gitmodules; }; f"
+	df = diff --color --color-words --abbrev
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	delete-unused-branches = "!f() { git branch | xargs git branch -d; }; f"
+	brdiff = "!f() { git rev-list ..$1 --oneline | sed -e '1 iOnly in other:'; git rev-list $1.. --oneline | sed -e '1 iOnly in HEAD:'; }; f"
+	ls = ls-files
+	rev = merge --no-ff --no-commit
+
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
 	l = log --pretty=oneline -n 20 --graph --abbrev-commit
 
 	# View the current working tree status using the short format
 	s = status -s
+
+	# View the current working tree status using the short format plus branch comparison information
+	sb = status -sb
+
+	# View the current working tree status
+	st = status
 
 	# Show the diff between the latest commit and the current state
 	d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
@@ -33,6 +69,7 @@
 	aliases = config --get-regexp alias
 
 	# Amend the currently staged files to the latest commit
+	fix = commit --amend
 	amend = commit --amend --reuse-message=HEAD
 
 	# Credit an author on the latest commit
@@ -115,9 +152,11 @@
 
 [color "branch"]
 
-	current = yellow reverse
+	#current = yellow reverse
+	current = green reverse
 	local = yellow
-	remote = green
+	#remote = green
+	remote = red
 
 [color "diff"]
 
@@ -125,6 +164,8 @@
 	frag = magenta bold # line info
 	old = red # deletions
 	new = green # additions
+	#old = red bold
+	#new = green bold
 
 [color "status"]
 
